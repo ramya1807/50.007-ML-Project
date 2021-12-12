@@ -37,12 +37,12 @@ def count_transition(file):
 
 
 #transition parameters
-def transition_parameters(transition_tracker, state, state_u):
-    if state not in transition_tracker:
+def transition_parameters(transition_track, state, state_u):
+    if state not in transition_track:
         fraction = 0
         
     else:
-        state_dict = transition_tracker[state]
+        state_dict = transition_track[state]
         numerator = state_dict.get(state_u, 0)
         denominator = sum(state_dict.values())
         fraction = numerator / denominator
