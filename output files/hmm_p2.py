@@ -5,7 +5,51 @@ import copy
 
 root_dir = "./"
 
-# Function to tabularise the emission parameters
+# count number of time - transition
+def count_transition(file):
+    with open(file, "r", encoding="cp437", errors='ignore') as f:
+        lines = f.readlines()
+    
+    state = "START" #first state
+    transition_track = {}
+    
+    for line in lines:
+        line_split = line.strip()  
+        line_split = line_split.rsplit(" ")  
+        
+        # case 1: word line
+        if len(line_split) == 2:
+            token = line_split[0]
+            state_u = line_split[1]
+            if state not in transition_track:
+                state_dict = {}
+            else:
+                state_dict = transition_track[state]
+            if state_u in state_dict:
+                state_dict[state_u] += 1
+            else:
+                state_dict[state_u] = 1
+
+            transition_track[state] = state_dict
+            state = state_u
+    
+    return transition_track
+
+
+#transition parameters
+def transition_parameters(transition_tracker, state, state_u):
+    if state not in transition_tracker:
+        fraction = 0
+        
+    else:
+        state_dict = transition_tracker[state]
+        numerator = state_dict.get(state_u, 0)
+        denominator = sum(state_dict.values())
+        fraction = numerator / denominator
+    
+    return fraction
+
+# count number of times - emission
 def count_emission(file):
     with open(file, "r", encoding="cp437", errors='ignore') as f:
         lines = f.readlines()
@@ -47,55 +91,6 @@ def emission_parameters(emission_tracker, x, y, k = 1.0): #set k to 1 according 
     else: 
         num = k
     return num / denom
-
-
-
-def count_transition(file):
-    with open(file, "r", encoding="cp437", errors='ignore') as f:
-        lines = f.readlines()
-    
-    start_state = "START"
-    stop_state = "STOP"
-    state = "START" #first state
-    transition_track = {}
-    
-    for line in lines:
-        line_split = line.strip()  
-        line_split = line_split.rsplit(" ")  
-        
-        # case 1: word line
-        if len(line_split) == 2:
-            token = line_split[0]
-            state_u = line_split[1]
-            if state not in transition_track:
-                state_dict = {}
-            else:
-                state_dict = transition_track[state]
-            if state_u in state_dict:
-                state_dict[state_u] += 1
-            else:
-                state_dict[state_u] = 1
-
-            transition_track[state] = state_dict
-            state = state_u
-    
-    return transition_track
-
-
-#transition parameters
-def transition_parameters(transition_tracker, state, state_u):
-    if state not in transition_tracker:
-        fraction = 0
-        
-    else:
-        state_dict = transition_tracker[state]
-        numerator = state_dict.get(state_u, 0)
-        denominator = sum(state_dict.values())
-        fraction = numerator / denominator
-    
-    return fraction
-
-
 
 #Viterbi
 def viterbi(emission_dict, transition_dict, observations, sentence):
