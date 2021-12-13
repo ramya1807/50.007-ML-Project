@@ -9,8 +9,6 @@ Original file is located at
 
 import re
 import sys
-import numpy as np
-import pandas as pd
 from EvalScript import evalResult
 
 def estimate_e(data):
