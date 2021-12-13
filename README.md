@@ -16,7 +16,7 @@ python hmm_part1.py RU
 ### Part 2 
 Run hmm_p2.py to output dev.p2.out
 ```
-python3 "/50.007-ML-Project/output files/hmm_p2.py"
+python3 "/50.007-ML-Project/Source codes/hmm_p2.py"
 ```
 Change directory to ES or RU and run the following code to obtain the precision, recall and F scores.
 
@@ -28,7 +28,7 @@ python3 evalResult.py dev.out dev.p2.out
 ### Part 3
 Run hmm_p3.py to output dev.p3.out
 ```
-python3 "/50.007-ML-Project/output files/hmm_p3.py"
+python3 "/50.007-ML-Project/Source codes/hmm_p3.py"
 ```
 Change directory to ES or RU and run the following code to obtain the precision, recall and F scores.
 
